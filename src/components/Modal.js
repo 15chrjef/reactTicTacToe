@@ -6,46 +6,52 @@ export default class PlayersModal extends React.Component {
 		super(props)
 	}
 	render() {
-		if(this.props.state.win) {
+		const { win, player1, player2, playerTurn, modalIsOpen } = this.props.state;
+		let modalContent;
+		let modalStyle;
+		if(win === true) {
 			var name;
-			if(this.props.state.playerTurn === 1){
-				name = this.props.state.player2
+			if(playerTurn === 1){
+				name = player2 || `player2`;
 			} else {
-				name = this.props.state.player1
+				name = player1 || `player1`;
 			}
-			return(
+			modalContent = <h1 style={{textAlign: 'center'}} ref="subtitle">Congratulations {name} you won!</h1>
+			modalStyle = {overlay: {...styles.modalStyle.overlay}, content: {...styles.modalStyle.content, ...styles.modalContent} }
+		} else if(win === '') {
+			modalStyle = styles.modalStyle
+			modalContent = (
 				<div>
-					<Modal
-						isOpen={true}
-						onAfterOpen={this.afterOpenModal}
-						onRequestClose={this.props.closeModal.bind(this)}
-						style={styles.modalStyle}
-						contentLabel="Example Modal"
-					>
-						<h1 ref="subtitle">Congratulations {name} you won!</h1>
-					</Modal>
+					<h2 ref="subtitle">Choose Your Players</h2>
+					<form style={{display: 'flex', flexDirection: 'column'}}>
+						<label>Player1</label><input id='player1' onChange={this.props.handleChange} value={player1} type='text'/>
+						<label style={{marginTop: '20px'}}>Player2</label><input  id='player2' onChange={this.props.handleChange} value={player2} type='text'/>
+						<button style={styles.submitButton} onClick={this.props.closeModal.bind(this)}>Submit</button>
+					</form>
 				</div>
 			)
-		} else {
-			return (
-				<div>
-					<Modal
-						isOpen={this.props.state.modalIsOpen}
-						onAfterOpen={this.afterOpenModal}
-						onRequestClose={this.props.closeModal.bind(this)}
-						style={styles.modalStyle}
-						contentLabel="Example Modal"
-					>
-						<h2 ref="subtitle">Choose Your Players</h2>
-						<form style={{display: 'flex', flexDirection: 'column'}}>
-							<label>Player1</label><input id='player1' onChange={this.props.handleChange} value={this.props.state.player1} type='text'/>
-							<label>Player2</label><input id='player2' onChange={this.props.handleChange} value={this.props.state.player2} type='text'/>
-							<button onClick={this.props.closeModal.bind(this)}>Submit</button>
-						</form>
-					</Modal>
-				</div>
+		} else if(win === 'tie') {
+			modalStyle = {overlay: {...styles.modalStyle.overlay}, content: {...styles.modalStyle.content, ...styles.modalContent} }
+			modalContent = ( 
+				<h1 style={{textAlign: 'center'}}>
+					<div>We have a Tie!</div>
+					<div>No Winners Today.</div>
+				</h1>
 			)
 		}
+		return (
+			<div>
+				<Modal
+					isOpen={modalIsOpen}
+					onAfterOpen={this.afterOpenModal}
+					onRequestClose={this.props.closeModal.bind(this)}
+					style={modalStyle}
+					contentLabel="Example Modal"
+				>
+					{modalContent}
+				</Modal>
+			</div>
+		)
 	}
 }
 
@@ -71,8 +77,20 @@ const styles = {
 			WebkitOverflowScrolling    : 'touch',
 			borderRadius               : '4px',
 			outline                    : 'none',
-			padding                    : '20px'
-	
+			padding                    : '20px',
 		}
+	},
+	submitButton: {
+		backgroundColor: 'black',
+		color: 'white',
+		height: '40px',
+		width: '200px',
+		border: 'none',
+		marginTop: '10px'
+	},
+	modalContent: {
+		display: 'flex', 
+		justifyContent: 'center', 
+		alignItems: 'center'
 	}
 }

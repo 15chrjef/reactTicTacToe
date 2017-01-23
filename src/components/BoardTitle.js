@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export default class DisplayHeader extends React.Component {
 	constructor(props){
 		super(props)
@@ -19,11 +18,12 @@ export default class DisplayHeader extends React.Component {
 
 const styles = {
 	headerStyle: {
+		fontFamily: 'Lato',
 		alignItems: 'center',
 		display: 'flex', 
 		justifyContent: 'center', 
 		flexDirection: 'column',
-		backgroundColor: '#3F51B5', 
+		backgroundColor: '#00ACC1', 
 		color: 'white',
 		fontSize: '30px',
 		height: '60px', 
