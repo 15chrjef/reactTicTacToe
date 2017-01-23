@@ -8,7 +8,7 @@ export default class Board extends Component {
 	}
 	render() {
 		return(
-			<div>
+			<div >
 				<BoardTitle state={this.props.state}/>
 				<BoardDisplay choosePosition={this.props.choosePosition} state={this.props.state}/>
 			</div>

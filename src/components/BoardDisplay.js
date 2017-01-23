@@ -1,5 +1,5 @@
 import React from 'react';
-
+import BoardRow from './BoardRow'
 
 export default class BoardDisplay extends React.Component {
 	constructor(props){
@@ -9,23 +9,27 @@ export default class BoardDisplay extends React.Component {
 		const { boardLayout } = this.props.state
 		var cp = this.props.choosePosition;
 		var b = boardLayout;
+		console.log('bbb', b.slice(0,1))
 		return (
-			<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
-				<div style={{fontSize: '150px', borderBottom: '1px solid black', display: 'flex'}}>
-					<div style={styles.pStyle} onClick={()=>{cp(0,0)}}> {b[0][0]} </div>|
-					<div style={styles.pStyle} onClick={()=>{cp(0,1)}}> {b[0][1]} </div>|
-					<div style={styles.pStyle} onClick={()=>{cp(0,2)}}> {b[0][2]} </div>
-				</div>
-				<div style={{fontSize: '150px', borderBottom: '1px solid black', display: 'flex'}}>
-					<div style={styles.pStyle} onClick={()=>{cp(1,0)}}> {b[1][0]} </div>|
-					<div style={styles.pStyle} onClick={()=>{cp(1,1)}}> {b[1][1]} </div>|
-					<div style={styles.pStyle} onClick={()=>{cp(1,2)}}> {b[1][2]} </div>
-				</div>
-				<div style={{fontSize: '150px', display: 'flex'}}>
-					<div style={styles.pStyle} onClick={()=>{cp(2,0)}}> {b[2][0]} </div>|
-					<div style={styles.pStyle} onClick={()=>{cp(2,1)}}> {b[2][1]} </div>|
-					<div style={styles.pStyle} onClick={()=>{cp(2,2)}}> {b[2][2]} </div>
-				</div>
+			<div style={styles.displayStyle}>
+				<BoardRow 
+					style={styles.firstTwoRowsStyle}
+					rowNumber={0}
+					rowData={b.slice(0,1)}
+					choosePosition={this.props.choosePosition}
+				/>
+				<BoardRow 
+					style={styles.firstTwoRowsStyle}
+					rowNumber={1}
+					rowData={b.slice(1,2)}
+					choosePosition={this.props.choosePosition}
+				/>
+				<BoardRow 
+					style={{fontSize: '175px', color: '#00ACC1', display: 'flex', fontFamily: 'Lato'}}
+					rowNumber={2}
+					rowData={b.slice(2)}
+					choosePosition={this.props.choosePosition}
+				/>
 			</div>
 		)
 	}
@@ -33,6 +37,26 @@ export default class BoardDisplay extends React.Component {
 
 const styles = {
 	pStyle: {
-		cursor: 'pointer'
+		fontFamily: 'Lato',
+		cursor: 'pointer',
+	},
+	firstTwoRowsStyle: {
+		fontSize: '175px', 
+		borderBottom: '10px solid #00ACC1', 
+		color: '#00ACC1', 
+		display: 'flex', 
+		fontFamily: 'Lato'
+	},
+	displayStyle: {
+		fontFamily: 'Lato',
+		alignItems: 'center',
+		display: 'flex', 
+		justifyContent: 'center', 
+		flexDirection: 'column',
+		backgroundColor: '#B2EBF2', 
+		fontSize: '30px',
+		marginLeft: '-20px',
+		marginRight: '-20px',
+		padding: '40px',
 	}
 }
